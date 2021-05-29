@@ -7,6 +7,8 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.koin.fragmentFactory
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
+import rs.raf.projekat2.jovan_babic_rn3018.modules.coreModule
+import rs.raf.projekat2.jovan_babic_rn3018.modules.recipeModule
 import timber.log.Timber
 
 class Application : Application() {
@@ -26,12 +28,16 @@ class Application : Application() {
     }
 
     private fun initKoin() {
-
+        val modules = listOf(
+                coreModule,
+                recipeModule
+        )
         startKoin {
-            androidLogger(Level.DEBUG)
+            androidLogger(Level.ERROR)
             androidContext(this@Application)
             androidFileProperties()
             fragmentFactory()
+            modules(modules)
         }
     }
 

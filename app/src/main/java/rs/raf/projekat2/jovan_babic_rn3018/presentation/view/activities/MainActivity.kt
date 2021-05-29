@@ -1,13 +1,22 @@
 package rs.raf.projekat2.jovan_babic_rn3018.presentation.view.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import rs.raf.projekat2.jovan_babic_rn3018.R
 import rs.raf.projekat2.jovan_babic_rn3018.data.models.Category
 import rs.raf.projekat2.jovan_babic_rn3018.databinding.ActivityMainBinding
+import rs.raf.projekat2.jovan_babic_rn3018.presentation.contract.RecipeContract
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.view.recycler.adapter.CategoryAdapter
+import rs.raf.projekat2.jovan_babic_rn3018.presentation.view.recycler.adapter.RecipeAdapter
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.view.recycler.diff.CategoryDiffItemCallback
+import rs.raf.projekat2.jovan_babic_rn3018.presentation.view.states.RecipeState
+import rs.raf.projekat2.jovan_babic_rn3018.presentation.viewmodel.RecipeViewModel
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,8 +63,11 @@ class MainActivity : AppCompatActivity() {
         )
     )
 
+    private val recipeViewModel: RecipeContract.ViewModel by viewModel<RecipeViewModel>()
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var recipeAdapter: RecipeAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,14 +79,47 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         initRecycler()
+        initObservers()
+    }
+
+    private fun initObservers() {
+        recipeViewModel.recipeState.observe(this, Observer {
+            renderState(it)
+        })
     }
 
     private fun initRecycler() {
         binding.categoryRv.layoutManager = LinearLayoutManager(this)
         categoryAdapter = CategoryAdapter() {
-
+            println(it.title)
+            binding.categoryRv.visibility = View.GONE
+            binding.recipeRv.visibility = View.VISIBLE
+            recipeViewModel.deleteRecipes()
+            recipeViewModel.getRecipes(it.title)
+            recipeViewModel.getRecipesPage(it.title, "1")
         }
         binding.categoryRv.adapter = categoryAdapter
         categoryAdapter.submitList(categories)
+
+        binding.recipeRv.layoutManager = LinearLayoutManager(this)
+        recipeAdapter = RecipeAdapter() {
+            println(it.title)
+        }
+        binding.recipeRv.adapter = recipeAdapter
+    }
+
+    private fun renderState(state: RecipeState) {
+        when (state) {
+            is RecipeState.Success -> {
+                recipeAdapter.submitList(state.recipes)
+            }
+            is RecipeState.Error -> {
+                Timber.e("Error")
+            }
+            is RecipeState.DataFetched -> {}
+            is RecipeState.Loading -> {
+                Timber.e("Loading")
+            }
+        }
     }
 }

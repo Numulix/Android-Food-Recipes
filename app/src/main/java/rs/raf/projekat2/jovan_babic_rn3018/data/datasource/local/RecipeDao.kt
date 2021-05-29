@@ -28,7 +28,7 @@ abstract class RecipeDao {
     @Query("DELETE FROM recipe")
     abstract fun deleteAll(): Completable
 
-    @Query("SELECT * FROM ingredients WHERE recipe_id == :recipe_id")
+    @Query("SELECT * FROM ingredients WHERE recipe_id = :recipe_id")
     abstract fun getIngredientsForRecipe(recipe_id: String): Observable<IngredientsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
