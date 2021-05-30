@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">FoodRecipes</string>
     <string name="searchButtonText">Search</string>
+    <string name="catMenuItem">Categories</string>
+    <string name="savedRecipesMenuItem">Saved Recipes</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="saveRecipeText">Save Recipe</string>
 </resources>

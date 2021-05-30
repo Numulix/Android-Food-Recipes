@@ -3,6 +3,7 @@ package rs.raf.projekat2.jovan_babic_rn3018.presentation.view.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -78,6 +79,21 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_items, menu)
+
+        val catMenuItem = menu!!.findItem(R.id.categoriesMenuItem)
+        val savedRecipesMenuItem = menu!!.findItem(R.id.savedRecipesMenuItem)
+
+        catMenuItem.setOnMenuItemClickListener {
+            binding.recipeRv.visibility = View.GONE
+            binding.categoryRv.visibility = View.VISIBLE
+            true
+        }
+
+        return true;
+    }
+
     private fun init() {
         initListeners()
         initRecycler()
@@ -122,7 +138,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.recipeRv.layoutManager = LinearLayoutManager(this)
         recipeAdapter = RecipeAdapter() {
-            println(it.title)
+            val intent = Intent(this, RecipeDetailsActivity::class.java)
+            intent.putExtra("RECIPE", it)
+            startActivity(intent)
         }
         binding.recipeRv.adapter = recipeAdapter
     }
