@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -78,8 +79,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        initListeners()
         initRecycler()
         initObservers()
+    }
+
+    private fun initListeners() {
+        binding.searchBt.setOnClickListener {
+            val input = binding.searchEt.text.toString()
+            if (input.isBlank()) {
+                Toast.makeText(applicationContext, "Field empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            binding.searchEt.text.clear()
+
+            binding.categoryRv.visibility = View.GONE
+            binding.recipeRv.visibility = View.VISIBLE
+            recipeViewModel.deleteRecipes()
+            recipeViewModel.getRecipes(input)
+            recipeViewModel.getRecipesPage(input, "1")
+        }
     }
 
     private fun initObservers() {
