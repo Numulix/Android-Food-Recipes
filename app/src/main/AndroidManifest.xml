@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodRecipes">
-        <activity android:name=".presentation.view.activities.RecipeDetailsActivity"></activity>
+        <activity android:name=".presentation.view.activities.SaveRecipeActivity"></activity>
+        <activity android:name=".presentation.view.activities.RecipeDetailsActivity" />
         <activity android:name=".presentation.view.activities.RecepiesActivity" />
         <activity android:name=".presentation.view.activities.SplashActivity">
             <intent-filter>

@@ -5,4 +5,13 @@
     <string name="savedRecipesMenuItem">Saved Recipes</string>
     <string name="ingredients">Ingredients</string>
     <string name="saveRecipeText">Save Recipe</string>
+    <string name="selectDate">Select Date:</string>
+    <string name="chooseDate">Choose Date</string>
+    <string name="selectCategory">Select Category:</string>
+    <string-array name="spinnerItems">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+    </string-array>
+    <string name="addToMenu">Add to menu</string>
 </resources>

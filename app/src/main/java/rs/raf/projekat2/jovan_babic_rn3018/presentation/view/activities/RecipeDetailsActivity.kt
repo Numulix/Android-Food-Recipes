@@ -1,5 +1,6 @@
 package rs.raf.projekat2.jovan_babic_rn3018.presentation.view.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -31,6 +32,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
     private fun init() {
         initUi()
         initObserver()
+        initListeners()
     }
 
     private fun initUi() {
@@ -46,6 +48,14 @@ class RecipeDetailsActivity : AppCompatActivity() {
         recipeViewModel.ingredientState.observe(this, Observer {
             renderState(it)
         })
+    }
+
+    private fun initListeners() {
+        binding.saveRecipeBtn.setOnClickListener {
+            val intent = Intent(this, SaveRecipeActivity::class.java)
+            intent.putExtra("RECIPE", recipe)
+            startActivity(intent)
+        }
     }
 
     private fun renderState(state: IngredientState) {
