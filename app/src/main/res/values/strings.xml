@@ -14,4 +14,7 @@
         <item>Dinner</item>
     </string-array>
     <string name="addToMenu">Add to menu</string>
+    <string name="login">Login</string>
+    <string name="username">Username:</string>
+    <string name="pin">PIN:</string>
 </resources>

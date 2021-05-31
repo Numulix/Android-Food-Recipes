@@ -12,13 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodRecipes">
-        <activity android:name=".presentation.view.activities.SaveRecipeActivity"></activity>
+        <activity android:name=".presentation.view.activities.LoginActivity"></activity>
+        <activity android:name=".presentation.view.activities.SaveRecipeActivity" />
         <activity android:name=".presentation.view.activities.RecipeDetailsActivity" />
-        <activity android:name=".presentation.view.activities.RecepiesActivity" />
         <activity android:name=".presentation.view.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

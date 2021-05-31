@@ -15,6 +15,7 @@ import rs.raf.projekat2.jovan_babic_rn3018.databinding.ActivityMainBinding
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.contract.RecipeContract
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.view.recycler.adapter.CategoryAdapter
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.view.recycler.adapter.RecipeAdapter
+import rs.raf.projekat2.jovan_babic_rn3018.presentation.view.recycler.adapter.SavedRecipeAdapter
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.view.recycler.diff.CategoryDiffItemCallback
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.view.states.RecipeState
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.viewmodel.RecipeViewModel
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var recipeAdapter: RecipeAdapter
+    private lateinit var savedRecipeAdapter: SavedRecipeAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,6 +90,15 @@ class MainActivity : AppCompatActivity() {
         catMenuItem.setOnMenuItemClickListener {
             binding.recipeRv.visibility = View.GONE
             binding.categoryRv.visibility = View.VISIBLE
+            binding.savedRecipeRv.visibility = View.GONE
+            true
+        }
+
+        savedRecipesMenuItem.setOnMenuItemClickListener {
+            recipeViewModel.getSavedRecipes()
+            binding.recipeRv.visibility = View.GONE
+            binding.categoryRv.visibility = View.GONE
+            binding.savedRecipeRv.visibility = View.VISIBLE
             true
         }
 
@@ -111,6 +122,7 @@ class MainActivity : AppCompatActivity() {
 
             binding.categoryRv.visibility = View.GONE
             binding.recipeRv.visibility = View.VISIBLE
+            binding.savedRecipeRv.visibility = View.GONE
             recipeViewModel.deleteRecipes()
             recipeViewModel.getRecipes(input)
             recipeViewModel.getRecipesPage(input, "1")
@@ -121,6 +133,9 @@ class MainActivity : AppCompatActivity() {
         recipeViewModel.recipeState.observe(this, Observer {
             renderState(it)
         })
+        recipeViewModel.savedRecipeState.observe(this, Observer {
+            renderSavedState(it)
+        })
     }
 
     private fun initRecycler() {
@@ -129,6 +144,7 @@ class MainActivity : AppCompatActivity() {
             println(it.title)
             binding.categoryRv.visibility = View.GONE
             binding.recipeRv.visibility = View.VISIBLE
+            binding.savedRecipeRv.visibility = View.GONE
             recipeViewModel.deleteRecipes()
             recipeViewModel.getRecipes(it.title)
             recipeViewModel.getRecipesPage(it.title, "1")
@@ -143,12 +159,33 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.recipeRv.adapter = recipeAdapter
+
+        binding.savedRecipeRv.layoutManager = LinearLayoutManager(this)
+        savedRecipeAdapter = SavedRecipeAdapter() {
+
+        }
+        binding.savedRecipeRv.adapter = savedRecipeAdapter
     }
 
     private fun renderState(state: RecipeState) {
         when (state) {
             is RecipeState.Success -> {
                 recipeAdapter.submitList(state.recipes)
+            }
+            is RecipeState.Error -> {
+                Timber.e("Error")
+            }
+            is RecipeState.DataFetched -> {}
+            is RecipeState.Loading -> {
+                Timber.e("Loading")
+            }
+        }
+    }
+
+    private fun renderSavedState(state: RecipeState) {
+        when (state) {
+            is RecipeState.Success -> {
+                savedRecipeAdapter.submitList(state.recipes)
             }
             is RecipeState.Error -> {
                 Timber.e("Error")
