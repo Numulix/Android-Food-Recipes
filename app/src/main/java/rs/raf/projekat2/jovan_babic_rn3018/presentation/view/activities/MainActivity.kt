@@ -162,7 +162,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.savedRecipeRv.layoutManager = LinearLayoutManager(this)
         savedRecipeAdapter = SavedRecipeAdapter() {
-
+            val intent = Intent(this, SavedRecipeDetailsActivity::class.java)
+            intent.putExtra("RECIPE", it)
+            startActivity(intent)
         }
         binding.savedRecipeRv.adapter = savedRecipeAdapter
     }
