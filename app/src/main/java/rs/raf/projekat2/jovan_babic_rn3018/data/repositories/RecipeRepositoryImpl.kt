@@ -72,6 +72,7 @@ class RecipeRepositoryImpl(
                                 recipe_id = it.recipe_id,
                                 category = it.category,
                                 date = it.date,
+                                imageUrl = it.imageLink,
                                 ingredients = listOf()
                         )
                     }

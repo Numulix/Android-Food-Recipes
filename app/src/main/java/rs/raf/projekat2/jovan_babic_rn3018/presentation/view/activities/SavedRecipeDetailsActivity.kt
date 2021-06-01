@@ -1,5 +1,6 @@
 package rs.raf.projekat2.jovan_babic_rn3018.presentation.view.activities
 
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -11,6 +12,7 @@ import rs.raf.projekat2.jovan_babic_rn3018.presentation.contract.RecipeContract
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.view.states.IngredientState
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.viewmodel.RecipeViewModel
 import timber.log.Timber
+import java.io.FileInputStream
 
 class SavedRecipeDetailsActivity : AppCompatActivity() {
 
@@ -34,10 +36,19 @@ class SavedRecipeDetailsActivity : AppCompatActivity() {
     }
 
     private fun initUi() {
-        Glide
-                .with(binding.root.context)
-                .load(recipe.imageUrl)
-                .into(binding.recipeDetailsIv)
+        if (recipe.imageUrl.startsWith("http")) {
+            Glide
+                    .with(binding.root.context)
+                    .load(recipe.imageUrl)
+                    .into(binding.recipeDetailsIv)
+        } else {
+            val b = BitmapFactory.decodeStream(FileInputStream(recipe.imageUrl))
+            Glide
+                    .with(binding.root.context)
+                    .load(b)
+                    .into(binding.recipeDetailsIv)
+        }
+
         binding.recipeDetailsTitleTv.text = recipe.title
         binding.recipeDetailsSRankTv.text = recipe.socialRank
     }

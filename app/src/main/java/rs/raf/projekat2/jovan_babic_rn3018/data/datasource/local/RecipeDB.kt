@@ -12,7 +12,7 @@ import rs.raf.projekat2.jovan_babic_rn3018.data.models.SavedRecipeEntity
 
 @Database(
         entities = [RecipeEntity::class, IngredientsEntity::class, SavedRecipeEntity::class],
-        version = 10,
+        version = 11,
         exportSchema = false
 )
 @TypeConverters(DateConverter::class, ListConverter::class)

@@ -160,6 +160,7 @@ class RecipeViewModel(
                                 publisher = recipe.publisher,
                                 recipe_id = recipe.recipe_id,
                                 category = category,
+                                imageLink = recipe.imageUrl,
                                 date = date
                         )
                 )

@@ -12,5 +12,6 @@ data class SavedRecipeEntity(
     val publisher: String,
     val recipe_id: String,
     val category: String,
+    val imageLink: String,
     val date: Date
 )
