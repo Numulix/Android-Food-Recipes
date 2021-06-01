@@ -172,6 +172,7 @@ class MainActivity : AppCompatActivity() {
     private fun renderState(state: RecipeState) {
         when (state) {
             is RecipeState.Success -> {
+                binding.loadingPb.visibility = View.GONE
                 recipeAdapter.submitList(state.recipes)
             }
             is RecipeState.Error -> {
@@ -180,6 +181,7 @@ class MainActivity : AppCompatActivity() {
             is RecipeState.DataFetched -> {}
             is RecipeState.Loading -> {
                 Timber.e("Loading")
+                binding.loadingPb.visibility = View.VISIBLE
             }
         }
     }
@@ -187,6 +189,7 @@ class MainActivity : AppCompatActivity() {
     private fun renderSavedState(state: RecipeState) {
         when (state) {
             is RecipeState.Success -> {
+                binding.loadingPb.visibility = View.GONE
                 savedRecipeAdapter.submitList(state.recipes)
             }
             is RecipeState.Error -> {
@@ -195,7 +198,9 @@ class MainActivity : AppCompatActivity() {
             is RecipeState.DataFetched -> {}
             is RecipeState.Loading -> {
                 Timber.e("Loading")
+                binding.loadingPb.visibility = View.VISIBLE
             }
         }
     }
+
 }

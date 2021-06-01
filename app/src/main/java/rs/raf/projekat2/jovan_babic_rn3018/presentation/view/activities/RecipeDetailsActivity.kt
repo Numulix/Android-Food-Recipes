@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import rs.raf.projekat2.jovan_babic_rn3018.R
 import rs.raf.projekat2.jovan_babic_rn3018.data.models.Recipe
 import rs.raf.projekat2.jovan_babic_rn3018.databinding.ActivityRecipeDetailsBinding
 import rs.raf.projekat2.jovan_babic_rn3018.presentation.contract.RecipeContract
@@ -39,6 +40,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
         Glide
             .with(binding.root.context)
             .load(recipe.imageUrl)
+            .placeholder(R.drawable.loading_animation)
             .into(binding.recipeDetailsIv)
         binding.recipeDetailsTitleTv.text = recipe.title
         binding.recipeDetailsSRankTv.text = recipe.socialRank

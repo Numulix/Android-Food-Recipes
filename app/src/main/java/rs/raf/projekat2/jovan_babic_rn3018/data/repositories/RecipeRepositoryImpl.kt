@@ -6,6 +6,7 @@ import rs.raf.projekat2.jovan_babic_rn3018.data.datasource.local.RecipeDao
 import rs.raf.projekat2.jovan_babic_rn3018.data.datasource.remote.RecipeService
 import rs.raf.projekat2.jovan_babic_rn3018.data.models.*
 import timber.log.Timber
+import kotlin.math.roundToInt
 
 class RecipeRepositoryImpl(
         private val localDataSource: RecipeDao,
@@ -21,7 +22,7 @@ class RecipeRepositoryImpl(
                         RecipeEntity(
                                 id = it._id,
                                 title = it.title,
-                                socialRank = it.social_rank,
+                                socialRank = it.social_rank.toDouble().roundToInt().toString(),
                                 imageUrl = it.image_url,
                                 page = page,
                                 recipe_id = it.recipe_id,
